@@ -1,0 +1,45 @@
+[
+ {
+  "type": "document",
+  "children": [
+   {
+    "type": "element",
+    "tagName": "html",
+    "attributes": {
+     "lang": "en"
+    },
+    "children": [
+     {
+      "type": "element",
+      "tagName": "head",
+      "attributes": {},
+      "children": [
+       {
+        "type": "element",
+        "tagName": "title",
+        "attributes": {},
+        "children": []
+       }
+      ]
+     },
+     {
+      "type": "element",
+      "tagName": "body",
+      "attributes": {},
+      "children": [
+       {
+        "type": "element",
+        "tagName": "div",
+        "attributes": {
+         "id": "app",
+         "class": "main"
+        },
+        "children": []
+       }
+      ]
+     }
+    ]
+   }
+  ]
+ }
+]

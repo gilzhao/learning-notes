@@ -11,11 +11,14 @@
 
 [QUIC协议](https://zhuanlan.zhihu.com/p/405387352)
 
+### ISO-OSI七层网络模型
+
 ### TCP 对应 nodejs 的 net 包
 https://nodejs.org/dist/latest-v18.x/docs/api/net.html  
 https://nodejs.org/dist/latest-v18.x/docs/api/net.html#netcreateconnectionoptions-connectlistener
 
 ### stream 流
+TCP 层传输数据
 2方法 4个api
 往里写 往外读
 
@@ -68,3 +71,8 @@ https://juejin.cn/post/7011338084176363533
 #### PS.
 https://www.nodejs.org/  
 https://www.w3.org/
+
+
+### HTTP 对应 http 包
+Request
+Response

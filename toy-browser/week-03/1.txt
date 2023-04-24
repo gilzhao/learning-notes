@@ -1,0 +1,171 @@
+
+      html body #app { display: 'block'; width: '400px'; height: '300px'; background-color: 'black'; color: 'white'; }
+      h1 { color: grey; }
+    
+{
+ "type": "stylesheet",
+ "stylesheet": {
+  "rules": [
+   {
+    "type": "rule",
+    "selectors": [
+     "html body #app"
+    ],
+    "declarations": [
+     {
+      "type": "declaration",
+      "property": "display",
+      "value": "'block'",
+      "position": {
+       "start": {
+        "line": 2,
+        "column": 24
+       },
+       "end": {
+        "line": 2,
+        "column": 40
+       }
+      }
+     },
+     {
+      "type": "declaration",
+      "property": "width",
+      "value": "'400px'",
+      "position": {
+       "start": {
+        "line": 2,
+        "column": 42
+       },
+       "end": {
+        "line": 2,
+        "column": 56
+       }
+      }
+     },
+     {
+      "type": "declaration",
+      "property": "height",
+      "value": "'300px'",
+      "position": {
+       "start": {
+        "line": 2,
+        "column": 58
+       },
+       "end": {
+        "line": 2,
+        "column": 73
+       }
+      }
+     },
+     {
+      "type": "declaration",
+      "property": "background-color",
+      "value": "'black'",
+      "position": {
+       "start": {
+        "line": 2,
+        "column": 75
+       },
+       "end": {
+        "line": 2,
+        "column": 100
+       }
+      }
+     },
+     {
+      "type": "declaration",
+      "property": "color",
+      "value": "'white'",
+      "position": {
+       "start": {
+        "line": 2,
+        "column": 102
+       },
+       "end": {
+        "line": 2,
+        "column": 116
+       }
+      }
+     }
+    ],
+    "position": {
+     "start": {
+      "line": 2,
+      "column": 7
+     },
+     "end": {
+      "line": 2,
+      "column": 119
+     }
+    }
+   },
+   {
+    "type": "rule",
+    "selectors": [
+     "h1"
+    ],
+    "declarations": [
+     {
+      "type": "declaration",
+      "property": "color",
+      "value": "grey",
+      "position": {
+       "start": {
+        "line": 3,
+        "column": 12
+       },
+       "end": {
+        "line": 3,
+        "column": 23
+       }
+      }
+     }
+    ],
+    "position": {
+     "start": {
+      "line": 3,
+      "column": 7
+     },
+     "end": {
+      "line": 3,
+      "column": 26
+     }
+    }
+   }
+  ],
+  "parsingErrors": []
+ }
+}
+{
+  type: 'stylesheet',
+  stylesheet: {
+    source: undefined,
+    rules: [ [Object], [Object] ],
+    parsingErrors: []
+  }
+}
+[ 'html', 'body', '#app' ]
+word [ '#app', index: 0, input: '#app', groups: undefined ]
+#
+{
+  type: 'stylesheet',
+  stylesheet: {
+    source: undefined,
+    rules: [ [Object], [Object] ],
+    parsingErrors: []
+  }
+}
+[ 'html', 'body', '#app' ]
+word [ '#app', index: 0, input: '#app', groups: undefined ]
+#
+{
+  type: 'stylesheet',
+  stylesheet: {
+    source: undefined,
+    rules: [ [Object], [Object] ],
+    parsingErrors: []
+  }
+}
+[ 'html', 'body', '#app' ]
+word [ '#app', index: 0, input: '#app', groups: undefined ]
+#

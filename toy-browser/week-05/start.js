@@ -7,12 +7,19 @@ const html = `<html lang="en">
     <style>
       html body #app { display: 'block'; width: '400px'; height: '300px'; background-color: 'black'; color: 'white'; }
       .cont { color: grey; }
+      .f-container { display: flex; width: 600px; height: 400px;}
+      .item { flex: 1; }
     </style>
   </head>
   <body>
     <div id="app" class="main">
       <h3 class="cont">hello world</h3>
       <p>how are you ~~</p>
+      <div class="f-container>
+        <div class="item"></item>
+        <div class="item"></item>
+        <div class="item"></item>
+      </div>
     </div>
   </body>
 </html>

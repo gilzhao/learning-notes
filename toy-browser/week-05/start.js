@@ -5,20 +5,23 @@ const html = `<html lang="en">
   <head>
     <title>HTML DEMO</title>
     <style>
-      html body #app { display: 'block'; width: '400px'; height: '300px'; background-color: 'black'; color: 'white'; }
+      body { width: 600px; height: 500px; }
+      html body #app { display: block; width: 400px; height: 300px; background-color: black; color: white; }
       .cont { color: grey; }
-      .f-container { display: flex; width: 600px; height: 400px;}
-      .item { flex: 1; }
+      .container { display: flex; width: 600px; height: 400px; justify-content: start; }
+      .item { /*flex: 1;*/ width: 30px; }
+      .item1 { align-self: stretch; }
+      .item2 { width: 150px; }
     </style>
   </head>
   <body>
     <div id="app" class="main">
       <h3 class="cont">hello world</h3>
       <p>how are you ~~</p>
-      <div class="f-container>
-        <div class="item"></item>
-        <div class="item"></item>
-        <div class="item"></item>
+      <div class="container">
+        <div class="item item1"></div>
+        <div class="item item2"></div>
+        <div class="item"></div>
       </div>
     </div>
   </body>
@@ -77,6 +80,9 @@ setEmitCallback((token) => {
         styleSheet = styleParse;
         // console.log(JSON.stringify(styleParse, null, " "));
       }
+
+      // layout
+      layout(stack.at(-1));
     }
 
     stack.pop();
@@ -95,9 +101,6 @@ function applyStyle(element) {
   for (let sheet of styleSheet.stylesheet.rules) {
     selectors = sheet.selectors[0].split(" ");
     const specificity = selectorMatch(selectors[selectors.length - 1], element);
-
-    // console.log("🚀🚀🚀🚀🚀 ~ applyStyle ~ specificity:", specificity);
-
     if (specificity) {
       // console.log(
       //   "isSelectorMatch",
@@ -107,6 +110,7 @@ function applyStyle(element) {
 
       const declarations = sheet.declarations;
       element.style = element.style || {};
+      element.computedStyle = Object.create(element.style);
       const newSpecificity = specificity.reduce((r, e) => e + r * 65536, 0);
 
       for (const declaration of declarations) {
@@ -119,7 +123,7 @@ function applyStyle(element) {
         }
       }
 
-      console.log("element", element.style);
+      // console.log("element", element.style);
     }
   }
 }
@@ -171,10 +175,145 @@ for (char of html) {
 }
 
 // console.log(JSON.stringify(stack[0], null, 4));
-
-console.log("🚀🚀🚀🚀🚀 ~ stack:", stack);
-
 // 打印输出 node start.js >1.txt
 // console.log(JSON.stringify(stack, null, " "));
 
 // 作业：文本节点的处理
+
+function layout(container) {
+  if (
+    container &&
+    container.style &&
+    container.style.display &&
+    container.style.display.value === "flex"
+  ) {
+    // 主轴: main size
+    // 开始: main start left / right
+    // 结束: main end   left / right
+    // 交叉轴 相同的
+
+    const flexDirection = container.style["flex-direction"];
+    let mainSize = "width";
+    let mainSign = 1;
+    let mainStart = "left";
+    let mainEnd = "right";
+    let crossSize = "height";
+    let crossStart = "top";
+    let crossEnd = "bottom";
+    if (flexDirection === "row") {
+    } else if (flexDirection === "row-reverse") {
+      mainSign = -1;
+      mainStart = "right";
+      mainEnd = "left";
+    } else if (flexDirection === "column") {
+      mainSize = "height";
+      mainStart = "top";
+      mainEnd = "bottom";
+      crossSize = "width";
+      crossStart = "left";
+      crossEnd = "right";
+    } else if (flexDirection === "column-reverse") {
+      mainSize = "height";
+      mainSign = -1;
+      mainStart = "bottom";
+      mainEnd = "top";
+      crossSize = "width";
+      crossStart = "left";
+      crossEnd = "right";
+    }
+
+    let restSize = parseFloat(container?.style?.[mainSize]?.value);
+    let totalFlex = 0;
+    let flexItemCount = 0
+
+    for (let c of container.children) {
+      if (c.type === "text") continue;
+      flexItemCount += 1
+      if (c?.style?.[mainSize]) {
+        restSize -= parseFloat(c?.style?.[mainSize]?.value);
+      }
+
+      totalFlex += parseFloat(c?.style?.flex?.value) ?? 0;
+    }
+
+    if (totalFlex === 0) {
+      // TODO:
+      // justify-content
+
+      let align = container.style['justify-content']
+      let prev = 0
+      let step = 0
+
+      if (align === 'start') {
+        prev = 0
+      } else if (align === 'center') {
+        prev = restSize
+      } else if (align === 'end') {
+        prev = restSize /2
+      } else if (align === 'space-between') {
+        step = restSize / (flexItemCount - 1)
+      } else if (align === 'space-around') {
+        step = restSize / flexItemCount
+        prev = step / 2
+      } else if (align === 'space-evenly') {
+        step = restSize / (flexItemCount + 1)
+        prev = step
+      }
+
+      for (let c of container.children) {
+        let childWidth = parseFloat(c?.style?.width?.value ?? 0)
+        computedStyle[mainStart] = prev
+        prev += childWidth + step
+      }
+      
+    } else {
+      let perSizeForFlex = restSize / totalFlex;
+      let currentSize =
+        mainSign === 1 ? 0 : parseFloat(container?.style?.width?.value);
+      for (let c of container.children) {
+        if (c.type === "text") continue;
+
+        if (c?.style?.flex && !c?.style?.[mainSize]) {
+          if (!c.computedStyle) {
+            c.computedStyle = {};
+          }
+          c.computedStyle[mainSize] =
+            (c?.style?.flex?.value ?? 0) * perSizeForFlex;
+        }
+
+        // 计算位置大小
+        c.computedStyle[mainStart] = currentSize;
+        c.computedStyle[mainEnd] =
+          c.computedStyle[mainStart] + c.computedStyle[mainSize] * mainSign;
+        currentSize += c.computedStyle[mainSize] * mainSign;
+      }
+
+      // 处理 cross 轴 align-item align-self
+      let containerHeight = parseFloat(container.style[crossSize].value);
+
+      for (let c of container.children) {
+        let align = container.style["align-items"];
+        if (c?.style?.["align-self"]) {
+          align = c?.style?.["align-self"];
+        }
+
+        if (align === "stretch") {
+          c.computedStyle[crossStart] = 0;
+          c.computedStyle[crossEnd] = containerHeight; // 父容器的高度
+        } else if (align === "center") {
+          c.computedStyle[crossStart] =
+            (containerHeight - c.computedStyle[mainSize]) / 2;
+          c.computedStyle[crossEnd] =
+            (containerHeight - c.computedStyle[mainSize]) / 2 +
+            c.computedStyle[mainSize];
+        } else if (align === "start") {
+          c.computedStyle[crossStart] = 0;
+          c.computedStyle[crossEnd] = c.computedStyle[mainSize];
+        } else if (align === "end") {
+          c.computedStyle[crossStart] = containerHeight - c.computedStyle[mainSize];
+          c.computedStyle[crossEnd] = containerHeight;
+        }
+      }
+    }
+  }
+}

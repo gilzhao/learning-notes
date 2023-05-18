@@ -1,6 +1,12 @@
 {
+  "scripts": {
+    "test": "jest"
+  },
   "dependencies": {
     "acorn": "^8.8.2",
     "magic-string": "^0.30.0"
+  },
+  "devDependencies": {
+    "jest": "^29.5.0"
   }
 }

@@ -14,10 +14,12 @@ https://github.com/pngjs/pngjs#example
 ## gl
 https://www.npmjs.com/package/gl
 
-
-
 CPU 串行处理每个像素点
 GPU 处理，webGL webGPU （并行处理）
 webGl openGL 最传统
 
 利用 GPU， 用 OpenGL、webGL 使用的语言是 GLSL
+
+
+## liner-gradient
+https://developer.mozilla.org/zh-CN/docs/Web/CSS/gradient/linear-gradient

@@ -57,12 +57,40 @@ gl.shaderSource(
 gl.compileShader(vertShader);
 
 // 片元素着色器（片段着色器）
+// 强类型，整数与浮点数有区分，注意浮点数
+// 无法赋值，是只读的
+// linear-gradient(blue, red);
 var fragShader = gl.createShader(gl.FRAGMENT_SHADER);
+// gl.shaderSource(
+//   fragShader,
+//   `
+//   void main() {
+//     gl_FragColor = vec4(1.0, 0.0, 1.0, 1.0);
+//     if (gl_FragCoord.x > 10.0 && gl_FragCoord.x < 50.0 && gl_FragCoord.y > 10.0 && gl_FragCoord.y < 50.0) {
+//       gl_FragColor = vec4(1.0, 1.0, 0.0, 1.0);
+//     }
+//   }
+//   `
+// );
+// gl.shaderSource(
+//   fragShader,
+//   `
+//   void main() {
+//     gl_FragColor = vec4(1.0 - gl_FragCoord.y / 100.0, 0.0, gl_FragCoord.y / 100.0, 1.0);
+//   }
+//   `
+// );
 gl.shaderSource(
   fragShader,
   `
+  precision mediump float;
+  uniform float angle;
   void main() {
-    gl_FragColor = vec4(1.0, 0.0, 1.0, 1.0);
+    float x = gl_FragCoord.x - 50.0;
+    float y = gl_FragCoord.y - 50.0;
+    float d = sqrt(x * x + y * y);
+    float t = cos(atan(y, x) - 3.1415926 * angle) * d + 50.0;
+    gl_FragColor = vec4(1.0 - t / 100.0, 0.0, t / 100.0, 1.0);
   }
   `
 );
@@ -77,6 +105,9 @@ gl.useProgram(glProgram);
 
 var a_PointSize = gl.getAttribLocation(glProgram, "a_PointSize");
 gl.vertexAttrib1f(a_PointSize, 30.0);
+
+var angle = gl.getUniformLocation(glProgram, 'angle');
+gl.uniform1f(angle, 0.25);
 
 // 1.创建缓冲区对象
 var vertexBuffer = gl.createBuffer();

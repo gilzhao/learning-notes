@@ -61,6 +61,7 @@ gl.compileShader(vertShader);
 // 无法赋值，是只读的
 // linear-gradient(blue, red);
 var fragShader = gl.createShader(gl.FRAGMENT_SHADER);
+// type1: 绘制方框
 // gl.shaderSource(
 //   fragShader,
 //   `
@@ -72,6 +73,7 @@ var fragShader = gl.createShader(gl.FRAGMENT_SHADER);
 //   }
 //   `
 // );
+// type2: 渐变
 // gl.shaderSource(
 //   fragShader,
 //   `
@@ -80,6 +82,7 @@ var fragShader = gl.createShader(gl.FRAGMENT_SHADER);
 //   }
 //   `
 // );
+// type3: 带角度渐变
 gl.shaderSource(
   fragShader,
   `

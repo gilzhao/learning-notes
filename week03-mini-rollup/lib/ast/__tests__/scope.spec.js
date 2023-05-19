@@ -1,4 +1,4 @@
-const Scope = require("../../scope");
+const Scope = require("../scope");
 
 describe("测试 Scope", () => {
   it("简单父子关系", () => {

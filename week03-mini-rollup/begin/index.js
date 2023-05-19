@@ -2,7 +2,7 @@ const fs = require("fs");
 const acorn = require("acorn");
 const MagicString = require("magic-string");
 
-const code = fs.readFileSync("./source.js").toString();
+const code = fs.readFileSync("./source.js").toString(); // 读取的是二进制转换为字符串
 const ast = acorn.parse(code, {
   sourceType: "module",
   ecmaVersion: 7,

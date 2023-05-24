@@ -12,3 +12,14 @@ TDD 模式
 
 ## 05
 弄清变量的使用和声明
+
+## 06 module对象
+代码在模块化过程中必要的关键信息（过程）分析出来
+* imports 引入的变量
+* exports 导出的变量
+* definitions 所有定义的变量
+
+## 07 expand 语句扩展 （expandAllStatements 组装方法）
+rollup 最核心内容 treeShaking 组装
+* 将变量调用与声明合并
+* 依赖外部模块，通过 bundle 加载（下一节讲 08）

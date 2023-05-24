@@ -9,8 +9,10 @@ function has(obj, prop) {
 }
 
 class Module {
-  constructor({ code }) {
+  constructor({ code, path, bundle }) {
     this.code = new MagicString(code);
+    this.path = path;
+    this.bundle = bundle;
     this.ast = parse(code, {
       ecmaVersion: 7,
       sourceType: "module",
@@ -97,8 +99,12 @@ class Module {
   define(name) {
     // import 模块外
     if (has(this.imports, name)) {
-      // TODO
       // 加载模块
+      const importDeclaration = this.imports[name];
+      const source = importDeclaration.source;
+      const module = this.bundle.fetchModule(source, this.path);
+      const exportData = module.exports[importDeclaration.name];
+      return module.define(exportData.localName);
     } else {
       // 本模块
       const statement = this.definitions[name];
@@ -110,7 +116,7 @@ class Module {
           // b = a + 1 => a = 3 + f => f = 1
           return this.expandStatement(statement);
         }
-      } else if (SYSTEM_VARS.include(name)) {
+      } else if (SYSTEM_VARS.includes(name)) {
         return [];
       } else {
         throw new Error(`没有此变量: ${name}`);
